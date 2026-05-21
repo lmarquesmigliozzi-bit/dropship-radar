@@ -20,13 +20,18 @@ export default async function handler(req, res) {
         category: item.category,
         marketplace: "Global Marketplace",
         ranking: index + 1,
-        sales: Math.floor(Math.random() * 50000),
+        sales: Math.floor(
+          Math.random() * 50000
+        ),
         price_min: item.price * 0.6,
         price_max: item.price * 1.4,
         price_avg: item.price,
         supplier: "AliExpress",
-        supplier_link: "https://pt.aliexpress.com",
-        trend_score: Math.floor(Math.random() * 100),
+        supplier_link:
+          "https://pt.aliexpress.com",
+        trend_score: Math.floor(
+          Math.random() * 100
+        ),
         image_url: item.thumbnail
       }));
 
