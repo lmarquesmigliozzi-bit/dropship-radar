@@ -20,73 +20,15 @@ export default function Home() {
     }
   }
 
-  async function addFakeProducts() {
-   const realProducts = [
-  {
-    name: "Mini Impressora Térmica Bluetooth",
-    category: "Gadgets",
-    marketplace: "Shopee",
-    ranking: 1,
-    sales: 42000,
-    price_min: 22,
-    price_max: 129,
-    price_avg: 89,
-    supplier: "AliExpress",
-    supplier_link: "https://pt.aliexpress.com",
-    trend_score: 98
-  },
-  {
-    name: "Escova Secadora 5 em 1",
-    category: "Beleza",
-    marketplace: "Amazon",
-    ranking: 2,
-    sales: 31000,
-    price_min: 65,
-    price_max: 299,
-    price_avg: 179,
-    supplier: "Temu",
-    supplier_link: "https://www.temu.com",
-    trend_score: 94
-  },
-  {
-    name: "Projetor Galaxy LED",
-    category: "Casa",
-    marketplace: "Mercado Livre",
-    ranking: 3,
-    sales: 28000,
-    price_min: 40,
-    price_max: 199,
-    price_avg: 119,
-    supplier: "AliExpress",
-    supplier_link: "https://pt.aliexpress.com",
-    trend_score: 91
-  },
-  {
-    name: "Aspirador Portátil USB",
-    category: "Automotivo",
-    marketplace: "Shopee",
-    ranking: 4,
-    sales: 25000,
-    price_min: 35,
-    price_max: 149,
-    price_avg: 89,
-    supplier: "CJ Dropshipping",
-    supplier_link: "https://cjdropshipping.com",
-    trend_score: 89
-  },
-  {
-    name: "Luminária Sunset LED",
-    category: "Decoração",
-    marketplace: "TikTok Shop",
-    ranking: 5,
-    sales: 23000,
-    price_min: 28,
-    price_max: 119,
-    price_avg: 79,
-    supplier: "Temu",
-    supplier_link: "https://www.temu.com",
-    trend_score: 88
+ async function updateProducts() {
+  try {
+    await fetch("/api/update-products");
+
+    loadProducts();
+  } catch (error) {
+    console.log(error);
   }
+}
 ];
 await supabase.from("products").delete().neq("id", 0);
 await supabase.from("products").insert(realProducts);
@@ -176,7 +118,7 @@ await supabase.from("products").insert(realProducts);
 </div>
 
       <button
-        onClick={addFakeProducts}
+        onClick={updateProducts}
         style={{
           padding: "12px 20px",
           background: "#00c853",
