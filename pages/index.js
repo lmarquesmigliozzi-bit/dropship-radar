@@ -140,9 +140,10 @@ const filteredProducts = products.filter((product) => {
       </div>
 <div
   style={{
-    display: "flex",
-    gap: "20px",
-    marginBottom: "30px"
+    display: "grid",
+    gridTemplateColumns:
+      "repeat(auto-fit, minmax(320px, 1fr))",
+    gap: "20px"
   }}
 >
   <input
@@ -192,12 +193,14 @@ const filteredProducts = products.filter((product) => {
         <div
           key={product.id}
           style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "12px",
-            border: "1px solid #334155",
-            marginBottom: "20px"
-          }}
+  background: "#1e293b",
+  padding: "20px",
+  borderRadius: "18px",
+  border: "1px solid #334155",
+  marginBottom: "20px",
+  transition: "0.3s",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.25)"
+}}
         >
 
 <img
@@ -205,17 +208,21 @@ const filteredProducts = products.filter((product) => {
   alt={product.name}
   style={{
     width: "100%",
-    height: "220px",
-    objectFit: "cover",
-    borderRadius: "12px",
-    marginBottom: "15px"
+    height: "260px",
+    objectFit: "contain",
+    background: "white",
+    borderRadius: "14px",
+    marginBottom: "15px",
+    padding: "10px"
   }}
-/>
-          
-          <h2>
-            #{product.ranking} - {product.name}
-          </h2>
-
+/>          
+          <h2
+  style={{
+    fontSize: "20px",
+    marginBottom: "12px",
+    minHeight: "50px"
+  }}
+>
           <p>
             Marketplace: {product.marketplace}
           </p>
