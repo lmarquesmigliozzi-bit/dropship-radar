@@ -20,20 +20,14 @@ export default function Home() {
     }
   }
 
- async function updateProducts() {
-  try {
-    await fetch("/api/update-products");
+  async function updateProducts() {
+    try {
+      await fetch("/api/update-products");
 
-    loadProducts();
-  } catch (error) {
-    console.log(error);
-  }
-}
-];
-await supabase.from("products").delete().neq("id", 0);
-await supabase.from("products").insert(realProducts);
-
-    loadProducts();
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -51,71 +45,79 @@ await supabase.from("products").insert(realProducts);
       }}
     >
       <h1
-  style={{
-    fontSize: "42px",
-    marginBottom: "10px"
-  }}
->
-  Dropship Radar AI
-</h1>
+        style={{
+          fontSize: "42px",
+          marginBottom: "10px"
+        }}
+      >
+        Dropship Radar AI
+      </h1>
 
-    <p
-  style={{
-    color: "#94a3b8",
-    marginBottom: "30px"
-  }}
->
-  Inteligência de produtos virais para ecommerce e dropshipping
-</p>
+      <p
+        style={{
+          color: "#94a3b8",
+          marginBottom: "30px"
+        }}
+      >
+        Inteligência de produtos virais para ecommerce e dropshipping
+      </p>
 
-    <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: "20px",
-    marginBottom: "30px"
-  }}
->
-  <div
-    style={{
-      background: "#1e293b",
-      padding: "20px",
-      borderRadius: "16px"
-    }}
-  >
-    <h3>Total Produtos</h3>
-    <p style={{ fontSize: "32px" }}>{products.length}</p>
-  </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "20px",
+          marginBottom: "30px"
+        }}
+      >
+        <div
+          style={{
+            background: "#1e293b",
+            padding: "20px",
+            borderRadius: "16px"
+          }}
+        >
+          <h3>Total Produtos</h3>
 
-  <div
-    style={{
-      background: "#1e293b",
-      padding: "20px",
-      borderRadius: "16px"
-    }}
-  >
-    <h3>Marketplace Top</h3>
-    <p style={{ fontSize: "24px" }}>Shopee</p>
-  </div>
+          <p style={{ fontSize: "32px" }}>
+            {products.length}
+          </p>
+        </div>
 
-  <div
-    style={{
-      background: "#1e293b",
-      padding: "20px",
-      borderRadius: "16px"
-    }}
-  >
-    <h3>Tendência Média</h3>
-    <p style={{ fontSize: "32px" }}>
-      {Math.floor(
-        products.reduce(
-          (acc, item) => acc + item.trend_score,
-          0
-        ) / (products.length || 1)
-      )}
-    </p>
-  </div>
-</div>
+        <div
+          style={{
+            background: "#1e293b",
+            padding: "20px",
+            borderRadius: "16px"
+          }}
+        >
+          <h3>Marketplace Top</h3>
+
+          <p style={{ fontSize: "24px" }}>
+            Mercado Livre
+          </p>
+        </div>
+
+        <div
+          style={{
+            background: "#1e293b",
+            padding: "20px",
+            borderRadius: "16px"
+          }}
+        >
+          <h3>Tendência Média</h3>
+
+          <p style={{ fontSize: "32px" }}>
+            {Math.floor(
+              products.reduce(
+                (acc, item) =>
+                  acc + item.trend_score,
+                0
+              ) / (products.length || 1)
+            )}
+          </p>
+        </div>
+      </div>
 
       <button
         onClick={updateProducts}
@@ -147,56 +149,60 @@ await supabase.from("products").insert(realProducts);
             #{product.ranking} - {product.name}
           </h2>
 
-          <p>Marketplace: {product.marketplace}</p>
+          <p>
+            Marketplace: {product.marketplace}
+          </p>
 
-          <p>Categoria: {product.category}</p>
+          <p>
+            Categoria: {product.category}
+          </p>
 
           <p>Vendas: {product.sales}</p>
 
-          <p>Preço médio: R$ {product.price_avg}</p>
           <p>
-  Lucro estimado: R${" "}
-  {Math.floor(product.price_avg - product.price_min)}
-</p>
-
-<p>
-  Opportunity Score:{" "}
-  <strong>
-    {Math.floor(
-      (product.sales * product.trend_score) / 1000
-    )}
-  </strong>
-</p>
+            Preço médio: R$ {product.price_avg}
+          </p>
 
           <p>
-           <div
-  style={{
-    marginTop: "15px"
-  }}
->
-  <a
-    href={product.supplier_link}
-    target="_blank"
-    style={{
-      background: "#00c853",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      color: "white",
-      textDecoration: "none",
-      display: "inline-block"
-    }}
-  >
-    Ver fornecedor no {product.supplier}
-  </a>
-</div>
+            Lucro estimado: R${" "}
+            {Math.floor(
+              product.price_avg -
+                product.price_min
+            )}
+          </p>
+
+          <p>
+            Opportunity Score:{" "}
+            <strong>
+              {Math.floor(
+                (product.sales *
+                  product.trend_score) /
+                  1000
+              )}
+            </strong>
+          </p>
+
+          <div
+            style={{
+              marginTop: "15px"
+            }}
+          >
             <a
               href={product.supplier_link}
               target="_blank"
-              style={{ color: "#00c853" }}
+              style={{
+                background: "#00c853",
+                padding: "10px 16px",
+                borderRadius: "8px",
+                color: "white",
+                textDecoration: "none",
+                display: "inline-block"
+              }}
             >
+              Ver fornecedor no{" "}
               {product.supplier}
             </a>
-          </p>
+          </div>
         </div>
       ))}
     </div>
