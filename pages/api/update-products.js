@@ -8,47 +8,52 @@ const supabase = createClient(
 export default async function handler(req, res) {
   try {
     const products = [
-      {
-        name: "Fone Bluetooth Gamer",
-        category: "Eletrônicos",
-        marketplace: "Mercado Livre",
-        ranking: 1,
-        sales: 54000,
-        price_min: 49,
-        price_max: 199,
-        price_avg: 129,
-        supplier: "AliExpress",
-        supplier_link: "https://pt.aliexpress.com",
-        trend_score: 97
-      },
-      {
-        name: "Smartwatch Ultra",
-        category: "Wearables",
-        marketplace: "Mercado Livre",
-        ranking: 2,
-        sales: 43000,
-        price_min: 80,
-        price_max: 299,
-        price_avg: 189,
-        supplier: "Temu",
-        supplier_link: "https://www.temu.com",
-        trend_score: 94
-      },
-      {
-        name: "Massageador Cervical",
-        category: "Saúde",
-        marketplace: "Mercado Livre",
-        ranking: 3,
-        sales: 39000,
-        price_min: 35,
-        price_max: 149,
-        price_avg: 99,
-        supplier: "CJ Dropshipping",
-        supplier_link: "https://cjdropshipping.com",
-        trend_score: 92
-      }
-    ];
-
+  {
+    name: "Fone Bluetooth Gamer",
+    category: "Eletrônicos",
+    marketplace: "Mercado Livre",
+    ranking: 1,
+    sales: 54000,
+    price_min: 49,
+    price_max: 199,
+    price_avg: 129,
+    supplier: "AliExpress",
+    supplier_link: "https://pt.aliexpress.com",
+    trend_score: 97,
+    image_url:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+  },
+  {
+    name: "Smartwatch Ultra",
+    category: "Wearables",
+    marketplace: "Mercado Livre",
+    ranking: 2,
+    sales: 43000,
+    price_min: 80,
+    price_max: 299,
+    price_avg: 189,
+    supplier: "Temu",
+    supplier_link: "https://www.temu.com",
+    trend_score: 94,
+    image_url:
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12"
+  },
+  {
+    name: "Massageador Cervical",
+    category: "Saúde",
+    marketplace: "Mercado Livre",
+    ranking: 3,
+    sales: 39000,
+    price_min: 35,
+    price_max: 149,
+    price_avg: 99,
+    supplier: "CJ Dropshipping",
+    supplier_link: "https://cjdropshipping.com",
+    trend_score: 92,
+    image_url:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15"
+  }
+];
     await supabase.from("products").delete().neq("id", 0);
 
     await supabase.from("products").insert(products);
