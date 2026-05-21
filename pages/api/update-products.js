@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  "https://ahyzapevaprliizmhswh.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc"
 );
 
 export default async function handler(req, res) {
@@ -14,52 +14,23 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     const products = data.products.map(
-      (item, index) => {
-        const salePrice = item.price;
-
-        const supplierPrice = Math.floor(
-          salePrice * 0.45
-        );
-
-        const monthlySales =
-          Math.floor(Math.random() * 9000) +
-          1000;
-
-        const trend =
-          Math.floor(Math.random() * 100);
-
-        return {
-          name: item.title,
-          category: item.category,
-          marketplace: "Global Marketplace",
-          ranking: index + 1,
-          sales: monthlySales,
-          monthly_sales: monthlySales,
-          price_min: supplierPrice,
-          price_max: Math.floor(
-            salePrice * 1.3
-          ),
-          price_avg: salePrice,
-          supplier_price: supplierPrice,
-          estimated_profit:
-            salePrice - supplierPrice,
-          roi: Math.floor(
-            ((salePrice - supplierPrice) /
-              supplierPrice) *
-              100
-          ),
-          supplier: "AliExpress",
-          supplier_link:
-            "https://pt.aliexpress.com",
-          trend_score: trend,
-          opportunity_score:
-            Math.floor(
-              (monthlySales * trend) /
-                1000
-            ),
-          image_url: item.thumbnail
-        };
-      }
+      (item, index) => ({
+        name: item.title,
+        category: item.category,
+        marketplace: "Global Marketplace",
+        ranking: index + 1,
+        sales: Math.floor(
+          Math.random() * 50000
+        ),
+        price_avg: item.price,
+        supplier: "AliExpress",
+        supplier_link:
+          "https://pt.aliexpress.com",
+        trend_score: Math.floor(
+          Math.random() * 100
+        ),
+        image_url: item.thumbnail
+      })
     );
 
     await supabase
