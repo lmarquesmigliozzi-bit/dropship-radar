@@ -147,9 +147,10 @@ await supabase.from("products").insert(fakeProducts);
         <div
           key={product.id}
           style={{
-            background: "#1e1e1e",
+            background: "#1e293b",
             padding: "20px",
             borderRadius: "12px",
+            border: "1px solid #334155",
             marginBottom: "20px"
           }}
         >
@@ -164,9 +165,41 @@ await supabase.from("products").insert(fakeProducts);
           <p>Vendas: {product.sales}</p>
 
           <p>Preço médio: R$ {product.price_avg}</p>
+          <p>
+  Lucro estimado: R${" "}
+  {Math.floor(product.price_avg - product.price_min)}
+</p>
+
+<p>
+  Opportunity Score:{" "}
+  <strong>
+    {Math.floor(
+      (product.sales * product.trend_score) / 1000
+    )}
+  </strong>
+</p>
 
           <p>
-            Fornecedor:{" "}
+           <div
+  style={{
+    marginTop: "15px"
+  }}
+>
+  <a
+    href={product.supplier_link}
+    target="_blank"
+    style={{
+      background: "#00c853",
+      padding: "10px 16px",
+      borderRadius: "8px",
+      color: "white",
+      textDecoration: "none",
+      display: "inline-block"
+    }}
+  >
+    Ver fornecedor no {product.supplier}
+  </a>
+</div>
             <a
               href={product.supplier_link}
               target="_blank"
