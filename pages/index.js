@@ -8,7 +8,10 @@ const supabase = createClient(
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+const [search, setSearch] = useState("");
+const [category, setCategory] = useState("Todas");
 
+  
   async function loadProducts() {
     const { data, error } = await supabase
       .from("products")
@@ -34,6 +37,18 @@ export default function Home() {
     loadProducts();
   }, []);
 
+const filteredProducts = products.filter((product) => {
+  const matchesSearch = product.name
+    .toLowerCase()
+    .includes(search.toLowerCase());
+
+  const matchesCategory =
+    category === "Todas" ||
+    product.category === category;
+
+  return matchesSearch && matchesCategory;
+});
+  
   return (
     <div
       style={{
@@ -118,7 +133,41 @@ export default function Home() {
           </p>
         </div>
       </div>
+<div
+  style={{
+    display: "flex",
+    gap: "20px",
+    marginBottom: "30px"
+  }}
+>
+  <input
+    type="text"
+    placeholder="Buscar produto..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    style={{
+      padding: "12px",
+      borderRadius: "8px",
+      border: "none",
+      width: "300px"
+    }}
+  />
 
+  <select
+    value={category}
+    onChange={(e) => setCategory(e.target.value)}
+    style={{
+      padding: "12px",
+      borderRadius: "8px",
+      border: "none"
+    }}
+  >
+    <option>Todas</option>
+    <option>Eletrônicos</option>
+    <option>Wearables</option>
+    <option>Saúde</option>
+  </select>
+</div>
       <button
         onClick={updateProducts}
         style={{
@@ -134,7 +183,7 @@ export default function Home() {
         Atualizar Produtos
       </button>
 
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <div
           key={product.id}
           style={{
