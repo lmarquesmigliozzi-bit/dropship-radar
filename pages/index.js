@@ -7,16 +7,20 @@ const supabase = createClient(
 );
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState("");
+  const [products, setProducts] =
+    useState([]);
+
+  const [search, setSearch] =
+    useState("");
 
   async function loadProducts() {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*")
-      .order("ranking", {
-        ascending: true
-      });
+    const { data, error } =
+      await supabase
+        .from("products")
+        .select("*")
+        .order("ranking", {
+          ascending: true
+        });
 
     if (!error && data) {
       setProducts(data);
@@ -25,7 +29,9 @@ export default function Home() {
 
   async function updateProducts() {
     try {
-      await fetch("/api/update-products");
+      await fetch(
+        "/api/update-products"
+      );
 
       await loadProducts();
     } catch (error) {
@@ -37,12 +43,12 @@ export default function Home() {
     loadProducts();
   }, []);
 
-  const filteredProducts = products.filter(
-    (product) =>
+  const filteredProducts =
+    products.filter((product) =>
       product.name
         ?.toLowerCase()
         .includes(search.toLowerCase())
-  );
+    );
 
   return (
     <div
@@ -69,7 +75,8 @@ export default function Home() {
           marginBottom: "30px"
         }}
       >
-        Inteligência de produtos para ecommerce
+        Inteligência de produtos para
+        ecommerce e dropshipping
       </p>
 
       <div
@@ -119,78 +126,131 @@ export default function Home() {
           gap: "20px"
         }}
       >
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            style={{
-              backgroundColor: "#1e293b",
-              borderRadius: "18px",
-              padding: "20px",
-              border:
-                "1px solid #334155"
-            }}
-          >
-            <img
-              src={product.image_url}
-              alt={product.name}
+        {filteredProducts.map(
+          (product) => (
+            <div
+              key={product.id}
               style={{
-                width: "100%",
-                height: "240px",
-                objectFit: "contain",
-                backgroundColor: "white",
-                borderRadius: "12px",
-                padding: "10px",
-                marginBottom: "15px"
-              }}
-            />
-
-            <h2
-              style={{
-                fontSize: "20px",
-                marginBottom: "10px"
+                backgroundColor:
+                  "#1e293b",
+                borderRadius: "18px",
+                padding: "20px",
+                border:
+                  "1px solid #334155"
               }}
             >
-              #{product.ranking} -{" "}
-              {product.name}
-            </h2>
+              <img
+                src={product.image_url}
+                alt={product.name}
+                style={{
+                  width: "100%",
+                  height: "240px",
+                  objectFit:
+                    "contain",
+                  backgroundColor:
+                    "white",
+                  borderRadius: "12px",
+                  padding: "10px",
+                  marginBottom:
+                    "15px"
+                }}
+              />
 
-            <p>
-              Categoria:{" "}
-              {product.category}
-            </p>
+              <h2
+                style={{
+                  fontSize: "20px",
+                  marginBottom:
+                    "10px"
+                }}
+              >
+                #{product.ranking} -{" "}
+                {product.name}
+              </h2>
 
-            <p>
-              Marketplace:{" "}
-              {product.marketplace}
-            </p>
+              <p>
+                Categoria:{" "}
+                {product.category}
+              </p>
 
-            <p>
-              Preço médio: R${" "}
-              {product.price_avg}
-            </p>
+              <p>
+                Marketplace:{" "}
+                {
+                  product.marketplace
+                }
+              </p>
 
-            <p>
-              Trend Score:{" "}
-              {product.trend_score}
-            </p>
+              <p>
+                Vendas 30d:{" "}
+                {
+                  product.monthly_sales
+                }
+              </p>
 
-            <a
-              href={product.supplier_link}
-              target="_blank"
-              style={{
-                display: "inline-block",
-                marginTop: "15px",
-                backgroundColor: "#00c853",
-                color: "white",
-                padding: "10px 15px",
-                borderRadius: "8px",
-                textDecoration: "none"
-              }}
-            >
-              Ver fornecedor
-            </a>
-          </div>
-        ))}
+              <p>
+                Preço médio: R${" "}
+                {product.price_avg}
+              </p>
+
+              <p>
+                Custo fornecedor:
+                R${" "}
+                {
+                  product.supplier_price
+                }
+              </p>
+
+              <p>
+                Lucro estimado:
+                R${" "}
+                {
+                  product.estimated_profit
+                }
+              </p>
+
+              <p>
+                ROI: {product.roi}%
+              </p>
+
+              <p>
+                Trend Score:{" "}
+                {
+                  product.trend_score
+                }
+              </p>
+
+              <p>
+                Opportunity Score:{" "}
+                {
+                  product.opportunity_score
+                }
+              </p>
+
+              <a
+                href={
+                  product.supplier_link
+                }
+                target="_blank"
+                style={{
+                  display:
+                    "inline-block",
+                  marginTop: "15px",
+                  backgroundColor:
+                    "#00c853",
+                  color: "white",
+                  padding:
+                    "10px 15px",
+                  borderRadius:
+                    "8px",
+                  textDecoration:
+                    "none"
+                }}
+              >
+                Comprar no
+                fornecedor
+              </a>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
