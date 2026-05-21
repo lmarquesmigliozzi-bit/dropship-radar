@@ -8,15 +8,19 @@ const supabase = createClient(
 export default async function handler(req, res) {
   try {
     const response = await fetch(
-      "https://api.mercadolibre.com/sites/MLB/search?q=iphone"
+      "https://api.mercadolibre.com/sites/MLB/search?q=smartphone"
     );
 
     const data = await response.json();
+    console.log("API RESPONSE:", data);
 console.log(data);
-    const items = data.results || [];
+   const items =
+  data.results ||
+  data.paging?.results ||
+  [];
 
 const products = items
-  .slice(0, 20)
+  .slice(0, 10)
   .map((item, index) => ({
     name: item.title || "Produto",
     category: "Marketplace",
