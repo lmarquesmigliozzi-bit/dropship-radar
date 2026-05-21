@@ -21,34 +21,25 @@ export default function Home() {
   }
 
   async function addFakeProducts() {
-    const fakeProducts = [
-      {
-        name: "Mini Impressora Térmica",
-        category: "Gadgets",
-        marketplace: "Shopee",
-        ranking: 1,
-        sales: 42000,
-        price_min: 22,
-        price_max: 129,
-        price_avg: 89,
-        supplier: "AliExpress",
-        supplier_link: "https://pt.aliexpress.com",
-        trend_score: 98
-      },
-      {
-        name: "Luminária LED Gamer",
-        category: "Casa",
-        marketplace: "Amazon",
-        ranking: 2,
-        sales: 31000,
-        price_min: 48,
-        price_max: 249,
-        price_avg: 149,
-        supplier: "Temu",
-        supplier_link: "https://www.temu.com",
-        trend_score: 94
-      }
-    ];
+    const fakeProducts = Array.from({ length: 50 }, (_, i) => ({
+  name: `Produto Viral ${i + 1}`,
+  category: ["Gadgets", "Casa", "Fitness", "Pet", "Beleza"][
+    Math.floor(Math.random() * 5)
+  ],
+  marketplace: ["Shopee", "Amazon", "Mercado Livre"][
+    Math.floor(Math.random() * 3)
+  ],
+  ranking: i + 1,
+  sales: Math.floor(Math.random() * 50000),
+  price_min: Math.floor(Math.random() * 50) + 10,
+  price_max: Math.floor(Math.random() * 300) + 100,
+  price_avg: Math.floor(Math.random() * 200) + 50,
+  supplier: ["AliExpress", "Temu", "CJ Dropshipping"][
+    Math.floor(Math.random() * 3)
+  ],
+  supplier_link: "https://pt.aliexpress.com",
+  trend_score: Math.floor(Math.random() * 100)
+}));
 
     await supabase.from("products").insert(fakeProducts);
 
