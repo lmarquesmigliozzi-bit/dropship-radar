@@ -23,16 +23,21 @@ const [category, setCategory] = useState("Todas");
     }
   }
 
-  async function updateProducts() {
-    try {
-      await fetch("/api/update-products");
+ async function updateProducts() {
+  try {
+    const response = await fetch(
+      "/api/update-products"
+    );
 
-      loadProducts();
-    } catch (error) {
-      console.log(error);
-    }
+    const result = await response.json();
+
+    console.log(result);
+
+    await loadProducts();
+  } catch (error) {
+    console.log(error);
   }
-
+}
   useEffect(() => {
     loadProducts();
   }, []);
