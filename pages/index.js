@@ -3,8 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   "https://ahyzapevaprliizmhswh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc
-"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc"
 );
 
 export default function Home() {
@@ -12,22 +11,26 @@ export default function Home() {
   const [search, setSearch] = useState("");
 
   async function loadProducts() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("products")
       .select("*")
       .order("ranking", {
         ascending: true
       });
 
-    if (data) {
+    if (!error && data) {
       setProducts(data);
     }
   }
 
   async function updateProducts() {
-    await fetch("/api/update-products");
+    try {
+      await fetch("/api/update-products");
 
-    await loadProducts();
+      await loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -66,17 +69,19 @@ export default function Home() {
           marginBottom: "30px"
         }}
       >
-        Produtos virais para ecommerce
+        Inteligência de produtos para ecommerce
       </p>
 
       <div
         style={{
           display: "flex",
           gap: "20px",
-          marginBottom: "30px"
+          marginBottom: "30px",
+          flexWrap: "wrap"
         }}
       >
         <input
+          type="text"
           placeholder="Buscar produto..."
           value={search}
           onChange={(e) =>
@@ -84,9 +89,9 @@ export default function Home() {
           }
           style={{
             padding: "12px",
-            width: "300px",
             borderRadius: "8px",
-            border: "none"
+            border: "none",
+            width: "300px"
           }}
         />
 
@@ -98,7 +103,8 @@ export default function Home() {
             border: "none",
             padding: "12px 20px",
             borderRadius: "8px",
-            cursor: "pointer"
+            cursor: "pointer",
+            fontWeight: "bold"
           }}
         >
           Atualizar Produtos
@@ -118,8 +124,10 @@ export default function Home() {
             key={product.id}
             style={{
               backgroundColor: "#1e293b",
+              borderRadius: "18px",
               padding: "20px",
-              borderRadius: "16px"
+              border:
+                "1px solid #334155"
             }}
           >
             <img
@@ -127,12 +135,12 @@ export default function Home() {
               alt={product.name}
               style={{
                 width: "100%",
-                height: "250px",
+                height: "240px",
                 objectFit: "contain",
                 backgroundColor: "white",
                 borderRadius: "12px",
-                marginBottom: "15px",
-                padding: "10px"
+                padding: "10px",
+                marginBottom: "15px"
               }}
             />
 
@@ -142,11 +150,13 @@ export default function Home() {
                 marginBottom: "10px"
               }}
             >
-              #{product.ranking} - {product.name}
+              #{product.ranking} -{" "}
+              {product.name}
             </h2>
 
             <p>
-              Categoria: {product.category}
+              Categoria:{" "}
+              {product.category}
             </p>
 
             <p>
@@ -160,7 +170,7 @@ export default function Home() {
             </p>
 
             <p>
-              Score:{" "}
+              Trend Score:{" "}
               {product.trend_score}
             </p>
 
