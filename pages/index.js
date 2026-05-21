@@ -41,7 +41,8 @@ export default function Home() {
   trend_score: Math.floor(Math.random() * 100)
 }));
 
-    await supabase.from("products").insert(fakeProducts);
+await supabase.from("products").delete().neq("id", 0);
+await supabase.from("products").insert(fakeProducts);
 
     loadProducts();
   }
