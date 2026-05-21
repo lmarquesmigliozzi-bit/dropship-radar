@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  "https://ahyzapevaprliizmhswh.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc"
 );
 
 export default function Home() {
@@ -75,16 +75,14 @@ export default function Home() {
           marginBottom: "30px"
         }}
       >
-        Inteligência de produtos para
-        ecommerce
+        Produtos virais para ecommerce
       </p>
 
       <div
         style={{
           display: "flex",
           gap: "20px",
-          marginBottom: "30px",
-          flexWrap: "wrap"
+          marginBottom: "30px"
         }}
       >
         <input
@@ -121,7 +119,7 @@ export default function Home() {
         style={{
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fit, minmax(320px, 1fr))",
+            "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "20px"
         }}
       >
@@ -141,7 +139,7 @@ export default function Home() {
                 alt={product.name}
                 style={{
                   width: "100%",
-                  height: "240px",
+                  height: "220px",
                   objectFit:
                     "contain",
                   backgroundColor:
@@ -164,10 +162,15 @@ export default function Home() {
               </p>
 
               <p>
-                Vendas 30d:{" "}
+                Marketplace:{" "}
                 {
-                  product.monthly_sales
+                  product.marketplace
                 }
+              </p>
+
+              <p>
+                Vendas:{" "}
+                {product.sales}
               </p>
 
               <p>
@@ -176,36 +179,9 @@ export default function Home() {
               </p>
 
               <p>
-                Custo fornecedor:
-                R${" "}
-                {
-                  product.supplier_price
-                }
-              </p>
-
-              <p>
-                Lucro estimado:
-                R${" "}
-                {
-                  product.estimated_profit
-                }
-              </p>
-
-              <p>
-                ROI: {product.roi}%
-              </p>
-
-              <p>
                 Trend Score:{" "}
                 {
                   product.trend_score
-                }
-              </p>
-
-              <p>
-                Opportunity Score:{" "}
-                {
-                  product.opportunity_score
                 }
               </p>
 
@@ -229,7 +205,7 @@ export default function Home() {
                     "none"
                 }}
               >
-                Comprar no fornecedor
+                Ver fornecedor
               </a>
             </div>
           )
