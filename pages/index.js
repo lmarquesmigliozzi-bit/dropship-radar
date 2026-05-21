@@ -145,6 +145,19 @@ export default function Home() {
             marginBottom: "20px"
           }}
         >
+
+<img
+  src={product.image_url}
+  alt={product.name}
+  style={{
+    width: "100%",
+    height: "220px",
+    objectFit: "cover",
+    borderRadius: "12px",
+    marginBottom: "15px"
+  }}
+/>
+          
           <h2>
             #{product.ranking} - {product.name}
           </h2>
