@@ -14,23 +14,53 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     const products = data.products.map(
-      (item, index) => ({
-        name: item.title,
-        category: item.category,
-        marketplace: "Global Marketplace",
-        ranking: index + 1,
-        sales: Math.floor(
-          Math.random() * 50000
-        ),
-        price_avg: item.price,
-        supplier: "AliExpress",
-        supplier_link:
-          "https://pt.aliexpress.com",
-        trend_score: Math.floor(
-          Math.random() * 100
-        ),
-        image_url: item.thumbnail
-      })
+      (item, index) => {
+  const monthlySales =
+    Math.floor(Math.random() * 9000) +
+    1000;
+
+  const supplierPrice =
+    Math.floor(item.price * 0.45);
+
+  const trend =
+    Math.floor(Math.random() * 100);
+
+  return {
+    name: item.title,
+
+    category: item.category,
+
+    marketplace: "Global Marketplace",
+
+    ranking: index + 1,
+
+    sales: monthlySales,
+
+    monthly_sales: monthlySales,
+
+    price_avg: item.price,
+
+    supplier_price: supplierPrice,
+
+    estimated_profit:
+      item.price - supplierPrice,
+
+    roi: Math.floor(
+      ((item.price - supplierPrice) /
+        supplierPrice) *
+        100
+    ),
+
+    supplier: "AliExpress",
+
+    supplier_link:
+      "https://pt.aliexpress.com",
+
+    trend_score: trend,
+
+    image_url: item.thumbnail
+  };
+}
     );
 
     await supabase
