@@ -12,27 +12,27 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
+console.log(data);
+    const items = data.results || [];
 
-    const products = data.results
-      .slice(0, 20)
-      .map((item, index) => ({
-        name: item.title,
-        category: "Marketplace",
-        marketplace: "Mercado Livre",
-        ranking: index + 1,
-        sales: Math.floor(Math.random() * 50000),
-        price_min: item.price * 0.5,
-        price_max: item.price * 1.3,
-        price_avg: item.price,
-        supplier: "AliExpress",
-        supplier_link: "https://pt.aliexpress.com",
-        trend_score: Math.floor(Math.random() * 100),
-        image_url: item.thumbnail.replace(
-          "I.jpg",
-          "O.jpg"
-        )
-      }));
-
+const products = items
+  .slice(0, 20)
+  .map((item, index) => ({
+    name: item.title || "Produto",
+    category: "Marketplace",
+    marketplace: "Mercado Livre",
+    ranking: index + 1,
+    sales: Math.floor(Math.random() * 50000),
+    price_min: Number(item.price || 0) * 0.5,
+    price_max: Number(item.price || 0) * 1.3,
+    price_avg: Number(item.price || 0),
+    supplier: "AliExpress",
+    supplier_link: "https://pt.aliexpress.com",
+    trend_score: Math.floor(Math.random() * 100),
+    image_url:
+      item.thumbnail ||
+      "https://via.placeholder.com/300"
+  }));
     await supabase
       .from("products")
       .delete()
