@@ -1,42 +1,32 @@
-import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   "https://ahyzapevaprliizmhswh.supabase.co",
-  "ANON: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc
-"
+  "COLE_SUA_ANON_KEY_AQUI"
 );
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Todas");
 
   async function loadProducts() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("products")
       .select("*")
-      .order("ranking", { ascending: true });
+      .order("ranking", {
+        ascending: true
+      });
 
-    if (!error && data) {
+    if (data) {
       setProducts(data);
     }
   }
 
   async function updateProducts() {
-    try {
-      const response = await fetch(
-        "/api/update-products"
-      );
+    await fetch("/api/update-products");
 
-      const result = await response.json();
-
-      console.log(result);
-
-      await loadProducts();
-    } catch (error) {
-      console.log(error);
-    }
+    await loadProducts();
   }
 
   useEffect(() => {
@@ -44,28 +34,19 @@ export default function Home() {
   }, []);
 
   const filteredProducts = products.filter(
-    (product) => {
-      const matchesSearch = product.name
+    (product) =>
+      product.name
         ?.toLowerCase()
-        .includes(search.toLowerCase());
-
-      const matchesCategory =
-        category === "Todas" ||
-        product.category === category;
-
-      return (
-        matchesSearch && matchesCategory
-      );
-    }
+        .includes(search.toLowerCase())
   );
 
   return (
     <div
       style={{
-        background: "#0f172a",
+        backgroundColor: "#0f172a",
         minHeight: "100vh",
-        color: "white",
         padding: "40px",
+        color: "white",
         fontFamily: "Arial"
       }}
     >
@@ -84,80 +65,17 @@ export default function Home() {
           marginBottom: "30px"
         }}
       >
-        Inteligência de produtos virais para ecommerce e
-        dropshipping
+        Produtos virais para ecommerce
       </p>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(3, 1fr)",
-          gap: "20px",
-          marginBottom: "30px"
-        }}
-      >
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "16px"
-          }}
-        >
-          <h3>Total Produtos</h3>
-
-          <p style={{ fontSize: "32px" }}>
-            {products.length}
-          </p>
-        </div>
-
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "16px"
-          }}
-        >
-          <h3>Marketplace</h3>
-
-          <p style={{ fontSize: "24px" }}>
-            Global Marketplace
-          </p>
-        </div>
-
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "16px"
-          }}
-        >
-          <h3>Tendência Média</h3>
-
-          <p style={{ fontSize: "32px" }}>
-            {Math.floor(
-              products.reduce(
-                (acc, item) =>
-                  acc +
-                  (item.trend_score || 0),
-                0
-              ) /
-                (products.length || 1)
-            )}
-          </p>
-        </div>
-      </div>
 
       <div
         style={{
           display: "flex",
           gap: "20px",
-          marginBottom: "30px",
-          flexWrap: "wrap"
+          marginBottom: "30px"
         }}
       >
         <input
-          type="text"
           placeholder="Buscar produto..."
           value={search}
           onChange={(e) =>
@@ -165,46 +83,21 @@ export default function Home() {
           }
           style={{
             padding: "12px",
-            borderRadius: "8px",
-            border: "none",
-            width: "300px"
-          }}
-        />
-
-        <select
-          value={category}
-          onChange={(e) =>
-            setCategory(e.target.value)
-          }
-          style={{
-            padding: "12px",
+            width: "300px",
             borderRadius: "8px",
             border: "none"
           }}
-        >
-          <option>Todas</option>
-
-          {[...new Set(
-            products.map(
-              (product) => product.category
-            )
-          )].map((cat) => (
-            <option key={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+        />
 
         <button
           onClick={updateProducts}
           style={{
-            padding: "12px 20px",
-            background: "#00c853",
-            border: "none",
+            backgroundColor: "#00c853",
             color: "white",
+            border: "none",
+            padding: "12px 20px",
             borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold"
+            cursor: "pointer"
           }}
         >
           Atualizar Produtos
@@ -223,13 +116,9 @@ export default function Home() {
           <div
             key={product.id}
             style={{
-              background: "#1e293b",
+              backgroundColor: "#1e293b",
               padding: "20px",
-              borderRadius: "18px",
-              border:
-                "1px solid #334155",
-              boxShadow:
-                "0 10px 30px rgba(0,0,0,0.25)"
+              borderRadius: "16px"
             }}
           >
             <img
@@ -237,10 +126,10 @@ export default function Home() {
               alt={product.name}
               style={{
                 width: "100%",
-                height: "260px",
+                height: "250px",
                 objectFit: "contain",
-                background: "white",
-                borderRadius: "14px",
+                backgroundColor: "white",
+                borderRadius: "12px",
                 marginBottom: "15px",
                 padding: "10px"
               }}
@@ -249,13 +138,15 @@ export default function Home() {
             <h2
               style={{
                 fontSize: "20px",
-                marginBottom: "12px",
-                minHeight: "50px"
+                marginBottom: "10px"
               }}
             >
-              #{product.ranking} -{" "}
-              {product.name}
+              #{product.ranking} - {product.name}
             </h2>
+
+            <p>
+              Categoria: {product.category}
+            </p>
 
             <p>
               Marketplace:{" "}
@@ -263,57 +154,30 @@ export default function Home() {
             </p>
 
             <p>
-              Categoria: {product.category}
-            </p>
-
-            <p>Vendas: {product.sales}</p>
-
-            <p>
               Preço médio: R${" "}
               {product.price_avg}
             </p>
 
             <p>
-              Lucro estimado: R${" "}
-              {Math.floor(
-                product.price_avg -
-                  product.price_min
-              )}
+              Score:{" "}
+              {product.trend_score}
             </p>
 
-            <p>
-              Opportunity Score:{" "}
-              <strong>
-                {Math.floor(
-                  (product.sales *
-                    product.trend_score) /
-                    1000
-                )}
-              </strong>
-            </p>
-
-            <div
+            <a
+              href={product.supplier_link}
+              target="_blank"
               style={{
-                marginTop: "15px"
+                display: "inline-block",
+                marginTop: "15px",
+                backgroundColor: "#00c853",
+                color: "white",
+                padding: "10px 15px",
+                borderRadius: "8px",
+                textDecoration: "none"
               }}
             >
-              <a
-                href={product.supplier_link}
-                target="_blank"
-                style={{
-                  background: "#00c853",
-                  padding: "10px 16px",
-                  borderRadius: "8px",
-                  color: "white",
-                  textDecoration:
-                    "none",
-                  display: "inline-block"
-                }}
-              >
-                Ver fornecedor no{" "}
-                {product.supplier}
-              </a>
-            </div>
+              Ver fornecedor
+            </a>
           </div>
         ))}
       </div>
