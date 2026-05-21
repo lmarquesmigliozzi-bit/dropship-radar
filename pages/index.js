@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
-  "https://ahyzapevaprliizmhswh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc"
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
         }}
       >
         Inteligência de produtos para
-        ecommerce e dropshipping
+        ecommerce
       </p>
 
       <div
@@ -96,9 +96,9 @@ export default function Home() {
           }
           style={{
             padding: "12px",
+            width: "300px",
             borderRadius: "8px",
-            border: "none",
-            width: "300px"
+            border: "none"
           }}
         />
 
@@ -110,8 +110,7 @@ export default function Home() {
             border: "none",
             padding: "12px 20px",
             borderRadius: "8px",
-            cursor: "pointer",
-            fontWeight: "bold"
+            cursor: "pointer"
           }}
         >
           Atualizar Produtos
@@ -133,10 +132,8 @@ export default function Home() {
               style={{
                 backgroundColor:
                   "#1e293b",
-                borderRadius: "18px",
                 padding: "20px",
-                border:
-                  "1px solid #334155"
+                borderRadius: "16px"
               }}
             >
               <img
@@ -150,19 +147,13 @@ export default function Home() {
                   backgroundColor:
                     "white",
                   borderRadius: "12px",
-                  padding: "10px",
                   marginBottom:
-                    "15px"
+                    "15px",
+                  padding: "10px"
                 }}
               />
 
-              <h2
-                style={{
-                  fontSize: "20px",
-                  marginBottom:
-                    "10px"
-                }}
-              >
+              <h2>
                 #{product.ranking} -{" "}
                 {product.name}
               </h2>
@@ -170,13 +161,6 @@ export default function Home() {
               <p>
                 Categoria:{" "}
                 {product.category}
-              </p>
-
-              <p>
-                Marketplace:{" "}
-                {
-                  product.marketplace
-                }
               </p>
 
               <p>
@@ -245,8 +229,7 @@ export default function Home() {
                     "none"
                 }}
               >
-                Comprar no
-                fornecedor
+                Comprar no fornecedor
               </a>
             </div>
           )
