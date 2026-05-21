@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 
 const supabase = createClient(
   "https://ahyzapevaprliizmhswh.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+  "ANON: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoeXphcGV2YXBybGlpem1oc3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMTM4NzUsImV4cCI6MjA5NDg4OTg3NX0.Ejke6GrAqLHDWTwkp6i2QtTv-kyH9BTu1ChZ7VbzUNc
+"
 );
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
       .select("*")
       .order("ranking", { ascending: true });
 
-    if (!error) {
+    if (!error && data) {
       setProducts(data);
     }
   }
