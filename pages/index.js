@@ -54,14 +54,79 @@ await supabase.from("products").insert(fakeProducts);
   return (
     <div
       style={{
-        background: "#111",
+        background: "#0f172a",
         minHeight: "100vh",
         color: "white",
         padding: "40px",
         fontFamily: "Arial"
       }}
     >
-      <h1>Dropship Radar</h1>
+      <h1
+  style={{
+    fontSize: "42px",
+    marginBottom: "10px"
+  }}
+>
+  Dropship Radar AI
+</h1>
+
+    <p
+  style={{
+    color: "#94a3b8",
+    marginBottom: "30px"
+  }}
+>
+  Inteligência de produtos virais para ecommerce e dropshipping
+</p>
+
+    <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "20px",
+    marginBottom: "30px"
+  }}
+>
+  <div
+    style={{
+      background: "#1e293b",
+      padding: "20px",
+      borderRadius: "16px"
+    }}
+  >
+    <h3>Total Produtos</h3>
+    <p style={{ fontSize: "32px" }}>{products.length}</p>
+  </div>
+
+  <div
+    style={{
+      background: "#1e293b",
+      padding: "20px",
+      borderRadius: "16px"
+    }}
+  >
+    <h3>Marketplace Top</h3>
+    <p style={{ fontSize: "24px" }}>Shopee</p>
+  </div>
+
+  <div
+    style={{
+      background: "#1e293b",
+      padding: "20px",
+      borderRadius: "16px"
+    }}
+  >
+    <h3>Tendência Média</h3>
+    <p style={{ fontSize: "32px" }}>
+      {Math.floor(
+        products.reduce(
+          (acc, item) => acc + item.trend_score,
+          0
+        ) / (products.length || 1)
+      )}
+    </p>
+  </div>
+</div>
 
       <button
         onClick={addFakeProducts}
